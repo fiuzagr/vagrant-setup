@@ -9,8 +9,8 @@ export NVM_DIR=$HOME/.nvm
 export LOCAL_BIN=$HOME/.local/bin
 
 # PHPBREW
-source $HOME/.phpbrew/bashrc
-export PHPBREW_SET_PROMPT=1
+# source $HOME/.phpbrew/bashrc
+# export PHPBREW_SET_PROMPT=1
 
 # Path to your oh-my-zsh installation.
   export ZSH=$HOME/.oh-my-zsh
