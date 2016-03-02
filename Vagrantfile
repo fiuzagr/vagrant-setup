@@ -86,16 +86,16 @@ Vagrant.configure(2) do |config|
         php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
         git tmux zsh vim-nox
     # VERIFICAR ESSA MERDA
-      sed -i 's/^# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
+      # sed -i 's/^\# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # APACHE
       sudo a2enmod rewrite
       sudo a2enmod vhost_alias
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.dev.conf
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.meteoro.conf
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.nuts.conf
-      sudo a2ensite clientes.dev.conf
-      sudo a2ensite clientes.meteoro.conf
-      sudo a2ensite clientes.nuts.conf
+      mkdir /home/vagrant/VBOX/DEV && sudo a2ensite clientes.dev.conf
+      mkdir /home/vagrant/VBOX/METEORO && sudo a2ensite clientes.meteoro.conf
+      mkdir /home/vagrant/VBOX/NUTS && sudo a2ensite clientes.nuts.conf
       sudo service apache2 restart
     # LANG SSH FIX
       sed -i 's/^AcceptEnv LANG LC_*/# AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
@@ -131,6 +131,6 @@ Vagrant.configure(2) do |config|
       vim +PlugInstall +qall
       sed -i 's/^" let g:airline_theme=solarized/let g:airline_theme=solarized/' ~/.vimrc
   SHELL
-  # config.vm.provision "shell", inline: $user, privileged: false
+  config.vm.provision "shell", inline: $user, privileged: false
 
 end
