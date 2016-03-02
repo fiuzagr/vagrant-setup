@@ -90,14 +90,16 @@ Vagrant.configure(2) do |config|
     # APACHE
       sudo a2enmod rewrite
       sudo a2enmod vhost_alias
-      mkdir /home/vagrant/VBOX/DEV && sudo a2ensite clientes.dev.conf
+      mkdir /home/vagrant/VBOX/DEV
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.dev.conf
-      mkdir /home/vagrant/VBOX/METEORO && sudo a2ensite clientes.meteoro.conf
+      sudo a2ensite clientes.dev.conf
+      mkdir /home/vagrant/VBOX/METEORO
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.meteoro.conf
-      mkdir /home/vagrant/VBOX/NUTS && sudo a2ensite clientes.nuts.conf
+      sudo a2ensite clientes.meteoro.conf
+      mkdir /home/vagrant/VBOX/NUTS
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.nuts.conf
-      sudo service apache2 stop
-      sudo service apache2 start
+      sudo a2ensite clientes.nuts.conf
+      sudo service apache2 restart
     # LANG SSH FIX
       sed -i 's/^AcceptEnv LANG LC_*/# AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
     # SSH FIX
