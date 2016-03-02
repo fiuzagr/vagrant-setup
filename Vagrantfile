@@ -83,8 +83,8 @@ Vagrant.configure(2) do |config|
       sudo apt-get install -y \
         apache2 \
         mysql-server \
-        php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
-        git tmux zsh vim-nox \
+        php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libap¹ache2-mod-php5 \
+        git tmux zsh vim-nox \  
         > /dev/null
     # VERIFICAR ESSA MERDA
       sed -i 's/^# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
@@ -122,6 +122,7 @@ Vagrant.configure(2) do |config|
     # Vim Plug
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       vim +PlugInstall +qall
+      sed -i 's/^" let g:airline_theme='solarized'/let g:airline_theme='solarized'/' ~/.vimrc
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
