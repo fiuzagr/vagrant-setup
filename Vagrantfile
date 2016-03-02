@@ -130,6 +130,7 @@ Vagrant.configure(2) do |config|
     # Vim Plug
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       vim +PlugInstall +qall
+      sed -i 's/^" let g:airline_theme=solarized/let g:airline_theme=solarized/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
