@@ -43,7 +43,11 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder '~/Public/', "/home/vagrant/VBOX", create: true, group: "www-data", owner: "www-data"
+  config.vm.synced_folder '~/Public/', "/home/vagrant/VBOX", 
+    create: true,
+    group: "www-data",
+    owner: "vagrant",
+    mount_options: ["dmode=775,fmode=664"]
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -84,7 +88,7 @@ Vagrant.configure(2) do |config|
         apache2 \
         mysql-server \
         php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
-        git tmux zsh vim-nox
+        git tmux zsh vim-nox ctags
     # VERIFICAR ESSA MERDA
       # sed -i 's/^\# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # APACHE
