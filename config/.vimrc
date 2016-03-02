@@ -95,7 +95,7 @@ set relativenumber
 set number
 
 " Omnifunc
-set FileType php set omnif/unc=phpcomplete#CompletePHP
+set omnifunc=phpcomplete#CompletePHP
 
 " Easy Motion
 let g:EasyMotion_smartcase = 1
