@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"
-  # config.vm.hostname = "ubuntu"
+  config.vm.hostname = "ubuntu"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -25,10 +25,10 @@ Vagrant.configure(2) do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
 
-  config.vm.network "forwarded_port", guest: 80, host: 8181
-  config.vm.network "forwarded_port", guest: 3306, host: 3309
-  config.vm.network "forwarded_port", guest: 3000, host: 3007
-  config.vm.network "forwarded_port", guest: 3001, host: 3006
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 3306, host: 3306
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.network "forwarded_port", guest: 3001, host: 3001
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder '~/Public/', "/home/vagrant/VBOX"
+  config.vm.synced_folder '~/Public/', "/home/vagrant/VBOX", create: true, group: "www-data", owner: "www-data"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -83,10 +83,11 @@ Vagrant.configure(2) do |config|
       sudo apt-get install -y \
         apache2 \
         mysql-server \
-        php5 php5-mcrypt libapache2-mod-php5 \
-        git tmux zsh vim-nox
+        php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
+        git tmux zsh vim-nox \
+        > /dev/null
     # VERIFICAR ESSA MERDA
-    # sed -i 's/^Listen 80/ServerName 127.0.0.1\\nListen 80/' /etc/apache2/ports.conf
+      sed -i 's/^# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
       sudo a2enmod rewrite
       sudo a2enmod vhost_alias
       sudo service apache2 restart
@@ -95,29 +96,31 @@ Vagrant.configure(2) do |config|
     # SSH FIX
       echo 'LC_ALL="en_US.UTF-8"'  >  /etc/default/locale
     # CHANGE TO ZS
-      chsh -s /bin/zsh
+      sudo chsh -s /bin/zsh vagrant
   SHELL
   config.vm.provision "shell", inline: $root, privileged: true
   $user = <<-SHELL
     # NVM
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-      # . ~/.nvm/nvm.sh && nvm install 5 && nvm alias default 5
-      # npm install -g grunt-cli gulp bower webpack
+      . ~/.nvm/nvm.sh && nvm install 5 && nvm alias default 5
+      npm install -g grunt-cli gulp bower webpack
     # COMPOSER
       mkdir ~/.local/bin
-      wget -qO- http://getcomposer.org/installer | php -- --install-dir=~/.local/bin --filename=composer
+      wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
     # PHPBREW
       wget -P ~/.local/bin/ https://github.com/phpbrew/phpbrew/raw/master/phpbrew
     # Oh My Zsh
       sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     # Bullet Train Oh My Zsh
-      wget -P $ZSH/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
+      wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
+    # SETTINGS
+      wget -O ~/.zshrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.zshrc
+      wget -O ~/.vimrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.vimrc
+      wget -O ~/.tmux.conf https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.tmux.conf
+      wget -O ~/.tmuxline.conf https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.tmuxline.conf
     # Vim Plug
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    # SETTINGS
-      wget -PO ~/.zshrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.zshrc
-      wget -PO ~/.vimrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.vimrc
-      # wget -P ~/.tmux https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.zshrc
+      vim +PlugInstall +qall
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
