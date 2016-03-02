@@ -90,13 +90,14 @@ Vagrant.configure(2) do |config|
     # APACHE
       sudo a2enmod rewrite
       sudo a2enmod vhost_alias
-      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.dev.conf
-      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.meteoro.conf
-      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.nuts.conf
       mkdir /home/vagrant/VBOX/DEV && sudo a2ensite clientes.dev.conf
+      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.dev.conf
       mkdir /home/vagrant/VBOX/METEORO && sudo a2ensite clientes.meteoro.conf
+      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.meteoro.conf
       mkdir /home/vagrant/VBOX/NUTS && sudo a2ensite clientes.nuts.conf
-      sudo service apache2 restart
+      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.nuts.conf
+      sudo service apache2 stop
+      sudo service apache2 start
     # LANG SSH FIX
       sed -i 's/^AcceptEnv LANG LC_*/# AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
     # SSH FIX
@@ -111,7 +112,7 @@ Vagrant.configure(2) do |config|
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
       . ~/.nvm/nvm.sh && nvm install 5
       nvm alias default v5
-      # npm install -g grunt-cli gulp bower webpack
+      npm install -g grunt-cli gulp bower webpack
     # COMPOSER
       mkdir ~/.local/bin
       wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
@@ -130,7 +131,7 @@ Vagrant.configure(2) do |config|
     # Vim Plug
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       vim +PlugInstall +qall
-      sed -i 's/^" let g:airline_theme=solarized/let g:airline_theme=solarized/' ~/.vimrc
+      sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
