@@ -8,6 +8,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 " https://github.com/scrooloose/nerdtree
 Plug 'scrooloose/nerdtree'
+Plug 'crooloose/nerdcommenter'
+Plug 'jistr/vim-nerdtree-tabs'
 
 " https://github.com/edkolev/tmuxline.vim
 Plug 'edkolev/tmuxline.vim'
@@ -47,19 +49,25 @@ Plug 'airblade/vim-gitgutter'
 " Easy Motion
 Plug 'easymotion/vim-easymotion'
 
-" VERIFICAR
-
-" http://vimawesome.com/plugin/surround-vim
-Plug 'tpope/vim-surround'
-
-" AutoComplete
-" Plug 'Valloric/YouCompleteMe'
+" EditorConfig
+Plug 'editorconfig/editorconfig-vim'
 
 " https://github.com/tpope/vim-sensible
 Plug 'tpope/vim-sensible'
 
+" VERIFICAR
+
+" http://vimawesome.com/plugin/surround-vim
+" Plug 'tpope/vim-surround'
+
 " https://github.com/bling/vim-bufferline
-Plug 'bling/vim-bufferline'
+" Plug 'bling/vim-bufferline'
+
+" https://github.com/scrooloose/syntastic
+" Plug 'scrooloose/syntastic'
+
+" AutoComplete
+" Plug 'Valloric/YouCompleteMe'
 
 call plug#end()
 
@@ -74,6 +82,7 @@ nmap <leader>cb :CtrlPBuffer<CR>
 nmap <leader>cm :CtrlPMRU<CR>
 nmap <leader>cx :CtrlPMixed<CR>
 " BUFFER
+nmap <leader>bd :bdelete<CR>
 nmap <leader>bn :bnext<CR>
 nmap <leader>bp :bprevious<CR>
 
@@ -95,7 +104,12 @@ set relativenumber
 set number
 
 " Omnifunc
-set omnifunc=phpcomplete#CompletePHP
+" set omnifunc=phpcomplete#CompletePHP
+" set omnifunc=csscomplete#CompleteCSS
+" set omnifunc=javascriptcomplete#CompleteJS
+" set omnifunc=htmlcomplete#CompleteTags
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 
 " Easy Motion
 let g:EasyMotion_smartcase = 1

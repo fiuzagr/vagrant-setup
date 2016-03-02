@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder '~/Public/', "/home/vagrant/VBOX", 
+  config.vm.synced_folder '~/Public/', "/home/vagrant/VBOX",
     create: true,
     group: "www-data",
     owner: "vagrant",
@@ -80,6 +80,7 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+
   $root = <<-SHELL
     # LAMP SERVER && DEV TOOLS
       debconf-set-selections <<< 'mysql-server mysql-server/root_password password vagrant'
@@ -90,17 +91,18 @@ Vagrant.configure(2) do |config|
         php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
         git tmux zsh vim-nox ctags
     # VERIFICAR ESSA MERDA
-      # sed -i 's/^\# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
+      # sed -i 's/^\\# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # APACHE
       sudo a2enmod rewrite
       sudo a2enmod vhost_alias
       mkdir /home/vagrant/VBOX/DEV
+      mkdir /home/vagrant/VBOX/METEORO
+      mkdir /home/vagrant/VBOX/NUTS
+      mkdir /home/vagrant/VBOX/CONFS
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.dev.conf
       sudo a2ensite clientes.dev.conf
-      mkdir /home/vagrant/VBOX/METEORO
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.meteoro.conf
       sudo a2ensite clientes.meteoro.conf
-      mkdir /home/vagrant/VBOX/NUTS
       wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.nuts.conf
       sudo a2ensite clientes.nuts.conf
       sudo service apache2 restart
@@ -128,18 +130,24 @@ Vagrant.configure(2) do |config|
       sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     # Bullet Train Oh My Zsh
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
-    # SETTINGS
-      wget -O ~/.zshrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.zshrc
+  SHELL
+  config.vm.provision "shell", inline: $user, privileged: false
+
+  config.vm.provision "file", source: "config/.vimrc", destination: "~/.vimrc"
+  config.vm.provision "file", source: "config/.zshrc", destination: "~/.zshrc"
+  config.vm.provision "file", source: "config/.tmux.conf", destination: "~/.tmux.conf"
+  config.vm.provision "file", source: "config/.tmuxline.conf", destination: "~/.tmuxline.conf"
+
+  $vim = <<-SHELL
+    # Zsh
       source ~/.zshrc
-      wget -O ~/.vimrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.vimrc
-      wget -O ~/.tmux.conf https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.tmux.conf
-      wget -O ~/.tmuxline.conf https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.tmuxline.conf
     # Vim Plug
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       vim +PlugInstall +qall
+    # Vim Colors
       sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
   SHELL
-  config.vm.provision "shell", inline: $user, privileged: false
+  config.vm.provision "shell", inline: $vim, privileged: false
 
 end

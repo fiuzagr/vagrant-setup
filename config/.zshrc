@@ -104,4 +104,10 @@ source $ZSH/oh-my-zsh.sh
 
 # NVM
 export NVM_DIR=$HOME/.nvm
-[ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh  # This loads nvm
+  [ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh  # This loads nvm
+
+# ALIAS
+alias nuts='cd ~/VBOX/NUTS'
+alias meteoro='cd ~/VBOX/METEORO'
+alias dev='cd ~/VBOX/DEV'
+alias confs='cd ~/VBOX/CONFS'
