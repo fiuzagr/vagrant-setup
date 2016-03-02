@@ -87,8 +87,15 @@ Vagrant.configure(2) do |config|
         git tmux zsh vim-nox
     # VERIFICAR ESSA MERDA
       sed -i 's/^# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
+    # APACHE
       sudo a2enmod rewrite
       sudo a2enmod vhost_alias
+      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.dev.conf
+      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.meteoro.conf
+      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.nuts.conf
+      sudo a2ensite clientes.dev.conf
+      sudo a2ensite clientes.meteoro.conf
+      sudo a2ensite clientes.nuts.conf
       sudo service apache2 restart
     # LANG SSH FIX
       sed -i 's/^AcceptEnv LANG LC_*/# AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
@@ -97,7 +104,7 @@ Vagrant.configure(2) do |config|
     # CHANGE TO ZS
       sudo chsh -s /bin/zsh vagrant
   SHELL
-  # config.vm.provision "shell", inline: $root, privileged: true
+  config.vm.provision "shell", inline: $root, privileged: true
   $user = <<-SHELL
     # NVM
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
@@ -124,6 +131,6 @@ Vagrant.configure(2) do |config|
       vim +PlugInstall +qall
       sed -i 's/^" let g:airline_theme=solarized/let g:airline_theme=solarized/' ~/.vimrc
   SHELL
-  config.vm.provision "shell", inline: $user, privileged: false
+  # config.vm.provision "shell", inline: $user, privileged: false
 
 end

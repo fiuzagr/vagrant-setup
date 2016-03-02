@@ -1,10 +1,6 @@
 # TMUX
 if [ "$TMUX" = "" ]; then tmux; fi
 
-# NVM
-export NVM_DIR=$HOME/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 # LOCAL BIN (composer, phpbrew etc.)
 export LOCAL_BIN=$HOME/.local/bin
 
@@ -105,3 +101,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# NVM
+export NVM_DIR=$HOME/.nvm
+[ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh  # This loads nvm
