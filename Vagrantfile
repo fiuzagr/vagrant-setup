@@ -121,7 +121,8 @@ Vagrant.configure(2) do |config|
       wget -O ~/.tmuxline.conf https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.tmuxline.conf
     # Vim Plug
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      vim +PlugInstall +qall && sed -i 's/^" let g:airline_theme=solarized/let g:airline_theme=solarized/' ~/.vimrc
+      vim +PlugInstall +qall
+      sed -i 's/^" let g:airline_theme=solarized/let g:airline_theme=solarized/' ~/.vimrc
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
