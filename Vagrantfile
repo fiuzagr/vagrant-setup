@@ -84,8 +84,7 @@ Vagrant.configure(2) do |config|
         apache2 \
         mysql-server \
         php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
-        git tmux zsh vim-nox \
-        > /dev/null
+        git tmux zsh vim-nox
     # VERIFICAR ESSA MERDA
       sed -i 's/^# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
       sudo a2enmod rewrite
@@ -98,7 +97,7 @@ Vagrant.configure(2) do |config|
     # CHANGE TO ZS
       sudo chsh -s /bin/zsh vagrant
   SHELL
-  config.vm.provision "shell", inline: $root, privileged: true
+  # config.vm.provision "shell", inline: $root, privileged: true
   $user = <<-SHELL
     # NVM
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
@@ -116,13 +115,13 @@ Vagrant.configure(2) do |config|
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
     # SETTINGS
       wget -O ~/.zshrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.zshrc
+      source ~/.zshrc
       wget -O ~/.vimrc https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.vimrc
       wget -O ~/.tmux.conf https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.tmux.conf
       wget -O ~/.tmuxline.conf https://raw.githubusercontent.com/meteoro/vagrant-setup/master/config/.tmuxline.conf
     # Vim Plug
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      vim +PlugInstall +qall
-      sed -i "s/^\" let g:airline_theme='solarized'/let g:airline_theme='solarized'/" ~/.vimrc
+      vim +PlugInstall +qall && sed -i 's/^" let g:airline_theme=solarized/let g:airline_theme=solarized/' ~/.vimrc
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
