@@ -105,6 +105,7 @@ Vagrant.configure(2) do |config|
       sudo chsh -s /bin/zsh vagrant
   SHELL
   config.vm.provision "shell", inline: $root, privileged: true
+
   $user = <<-SHELL
     # NVM
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
