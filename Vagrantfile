@@ -57,7 +57,7 @@ Vagrant.configure(2) do |config|
     vb.memory = "1024"
 
     # Define name
-    vb.name = "METEORO"
+    vb.name = "UBUNTU"
 
     # Symlinks
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate", "1"]
