@@ -81,6 +81,15 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
 
+
+  config.vm.provision "file",
+    source: "apache/",
+    destination: "~/apache/"
+
+  config.vm.provision "file",
+    source: "config/",
+    destination: "~/config/"
+
   $root = <<-SHELL
     # LAMP SERVER && DEV TOOLS
       debconf-set-selections <<< 'mysql-server mysql-server/root_password password vagrant'
@@ -91,25 +100,16 @@ Vagrant.configure(2) do |config|
         php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
         git tmux zsh vim-nox ctags
     # VERIFICAR ESSA MERDA
-      # sed -i 's/^\\# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
-    # APACHE
-      sudo a2enmod rewrite
-      sudo a2enmod vhost_alias
-      mkdir /home/vagrant/VBOX/DEV
-      mkdir /home/vagrant/VBOX/METEORO
-      mkdir /home/vagrant/VBOX/NUTS
-      mkdir /home/vagrant/VBOX/CONFS
-      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.dev.conf
-      sudo a2ensite clientes.dev.conf
-      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.meteoro.conf
-      sudo a2ensite clientes.meteoro.conf
-      wget -P /etc/apache2/sites-available/ https://raw.githubusercontent.com/meteoro/vagrant-setup/master/apache/clientes.nuts.conf
-      sudo a2ensite clientes.nuts.conf
+      # sed -i 's/# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
+    # Apache
+      sudo a2enmod rewrite vhost_alias
+      sudo mv /home/vagrant/apache/* /etc/apache2/sites-available/ && rm -rf /home/vagrant/apache
+      sudo a2ensite clientes.dev.conf clientes.meteoro.conf clientes.nuts.conf
       sudo service apache2 restart
     # LANG SSH FIX
       sed -i 's/^AcceptEnv LANG LC_*/# AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
     # SSH FIX
-      echo 'LC_ALL="en_US.UTF-8"'  >  /etc/default/locale
+      echo 'LC_ALL="en_US.UTF-8"' > /etc/default/locale
     # CHANGE TO ZS
       sudo chsh -s /bin/zsh vagrant
   SHELL
@@ -118,27 +118,18 @@ Vagrant.configure(2) do |config|
   $user = <<-SHELL
     # NVM
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-      . ~/.nvm/nvm.sh && nvm install 5
-      nvm alias default v5
-      npm install -g grunt-cli gulp bower webpack
-    # COMPOSER
-      mkdir ~/.local/bin
-      wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
+      . ~/.nvm/nvm.sh && nvm install 5 && nvm alias default v5
+      # npm install -g grunt-cli gulp bower webpack
     # PHPBREW
       wget -P ~/.local/bin/ https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+    # COMPOSER
+      wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
     # Oh My Zsh
       sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     # Bullet Train Oh My Zsh
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
-  SHELL
-  config.vm.provision "shell", inline: $user, privileged: false
-
-  config.vm.provision "file", source: "config/.vimrc", destination: "~/.vimrc"
-  config.vm.provision "file", source: "config/.zshrc", destination: "~/.zshrc"
-  config.vm.provision "file", source: "config/.tmux.conf", destination: "~/.tmux.conf"
-  config.vm.provision "file", source: "config/.tmuxline.conf", destination: "~/.tmuxline.conf"
-
-  $vim = <<-SHELL
+    # CONFIGS MV
+      mv ~/config/.* ~/ && rm -rf ~/config/
     # Zsh
       source ~/.zshrc
     # Vim Plug
@@ -148,6 +139,6 @@ Vagrant.configure(2) do |config|
       sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
   SHELL
-  config.vm.provision "shell", inline: $vim, privileged: false
+  config.vm.provision "shell", inline: $user, privileged: false
 
 end
