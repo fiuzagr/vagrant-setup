@@ -109,7 +109,6 @@ Vagrant.configure(2) do |config|
         libicu-dev \
         libmhash-dev libmhash2 \
         libmcrypt-dev libmcrypt4
-
     # VERIFICAR ESSA MERDA
       # sed -i 's/# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # Apache
@@ -141,6 +140,8 @@ Vagrant.configure(2) do |config|
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
     # CONFIGS MV
       mv ~/config/.* ~/ && rm -rf ~/config/
+    # Permissões
+      chmod +x -R ~/.local/bin
     # Zsh
       source ~/.zshrc
     # Vim Plug
