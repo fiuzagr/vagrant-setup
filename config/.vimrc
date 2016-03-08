@@ -55,6 +55,9 @@ Plug 'editorconfig/editorconfig-vim'
 " https://github.com/tpope/vim-sensible
 Plug 'tpope/vim-sensible'
 
+" https://github.com/terryma/vim-multiple-cursors
+Plug 'terryma/vim-multiple-cursors'
+
 " VERIFICAR
 
 " http://vimawesome.com/plugin/surround-vim
