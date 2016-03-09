@@ -100,8 +100,8 @@ Vagrant.configure(2) do |config|
         php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
         git tmux zsh vim-nox ctags
     #PHPBREW
-      apt-get build-dep php5
-      apt-get install -y \
+      sudo apt-get build-dep php5
+      sudo apt-get install -y \
         dev php-pear autoconf automake curl libcurl3-openssl-dev build-essential libxslt1-dev re2c libxml2 libxml2-dev php5-cli bison libbz2-dev libreadline-dev \
         libfreetype6 libfreetype6-dev libpng12-0 libpng12-dev libjpeg-dev libjpeg8-dev libjpeg8  libgd-dev libgd3 libxpm4 libltdl7 libltdl-dev \
         libssl-dev openssl \
@@ -140,6 +140,8 @@ Vagrant.configure(2) do |config|
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
     # CONFIGS MV
       mv ~/config/.* ~/ && rm -rf ~/config/
+    # Permissões
+      chmod +x -R ~/.local/bin
     # Zsh
       source ~/.zshrc
     # Vim Plug
