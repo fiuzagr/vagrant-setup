@@ -10,7 +10,7 @@ export PHPBREW_SET_PROMPT=1
 export PHPBREW_RC_ENABLE=1
 
 #PYENV
-export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_ROOT="$HOME/.pyenv/bin"
 
 #RBENV
 export RBENV="$HOME/.rbenv/bin"
@@ -36,6 +36,10 @@ BULLETTRAIN_NVM_SHOW="true"
 BULLETTRAIN_CONTEXT_SHWO="true"
 BULLETTRAIN_GIT_SHOW="true"
 BULLETTRAIN_VIRTUALENV_SHOW="true"
+BULLETTRAIN_RUBY_SHOW="true"
+BULLETTRAIN_GO_SHOW="true"
+BULLETTRAIN_PERL_SHOW="true"
+BULLETTRAIN_GIT_PROMPT_CMD=\${\$(git_prompt_info)//\\//\ \ }
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -83,7 +87,7 @@ plugins=()
 
 # User configuration
 
-export PATH="$PLENV:$RBENV:$PYENV_ROOT/bin:$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$PLENV:$RBENV:$PYENV_ROOT:$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -116,6 +120,9 @@ source $ZSH/oh-my-zsh.sh
 
 # PYENV
 eval "$(pyenv init -)"
+
+# PLENV
+eval "$(plenv init -)"
 
 # NVM
 export NVM_DIR=$HOME/.nvm

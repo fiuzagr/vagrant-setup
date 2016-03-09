@@ -134,6 +134,8 @@ Vagrant.configure(2) do |config|
       git clone https://github.com/yyuu/pyenv.git ~/.pyenv
     # RBENV
       git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+    # PLENV
+      git clone https://github.com/tokuhirom/plenv.git ~/.plenv
     # COMPOSER
       wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
     # PERMISSIONS
