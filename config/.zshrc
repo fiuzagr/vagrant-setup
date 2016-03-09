@@ -5,11 +5,16 @@ if [ "$TMUX" = "" ]; then tmux; fi
 export LOCAL_BIN=$HOME/.local/bin
 
 # PHPBREW
-# source $HOME/.phpbrew/bashrc
-# export PHPBREW_SET_PROMPT=1
+source $HOME/.phpbrew/bashrc
+export PHPBREW_SET_PROMPT=1
+export PHPBREW_RC_ENABLE=1
+
+#PYENV
+export PYENV_ROOT="$HOME/.pyenv"
+eval "$(pyenv init -)"
 
 # Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -72,7 +77,7 @@ plugins=()
 
 # User configuration
 
-export PATH="$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$PYENV_ROOT:$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -105,7 +110,7 @@ source $ZSH/oh-my-zsh.sh
 
 # NVM
 export NVM_DIR=$HOME/.nvm
-  [ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh  # This loads nvm
+[ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh
 
 # ALIAS
 alias nuts='cd ~/VBOX/NUTS'

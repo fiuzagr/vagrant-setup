@@ -92,23 +92,22 @@ Vagrant.configure(2) do |config|
 
   $root = <<-SHELL
     # LAMP SERVER && DEV TOOLS
+      sudo apt-get update
       debconf-set-selections <<< 'mysql-server mysql-server/root_password password vagrant'
       debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password vagrant'
       sudo apt-get install -y \
         apache2 \
         mysql-server \
-        php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
         git tmux zsh vim-nox ctags
-    #PHPBREW
-      sudo apt-get build-dep php5
+    #PHPBREW (FAIL TO ALL)
+      sudo apt-get build-dep -y php5
       sudo apt-get install -y \
-        dev php-pear autoconf automake curl libcurl3-openssl-dev build-essential libxslt1-dev re2c libxml2 libxml2-dev php5-cli bison libbz2-dev libreadline-dev \
-        libfreetype6 libfreetype6-dev libpng12-0 libpng12-dev libjpeg-dev libjpeg8-dev libjpeg8  libgd-dev libgd3 libxpm4 libltdl7 libltdl-dev \
-        libssl-dev openssl \
-        gettext libgettextpo-dev libgettextpo0 \
-        libicu-dev \
-        libmhash-dev libmhash2 \
-        libmcrypt-dev libmcrypt4
+        php5-dev php5-mysql php5-sqlite php5-gd php5-mcrypt php-pear libapache2-mod-php5 \
+        libreadline-dev libgettextpo-dev libgettextpo0 libmcrypt-dev libc-client2007e-dev
+      sudo chmod -R oga+rw /usr/lib/apache2/modules
+      sudo chmod -R oga+rw /etc/apache2
+      sudo ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
+      sudo ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
     # VERIFICAR ESSA MERDA
       # sed -i 's/# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # Apache
@@ -132,6 +131,8 @@ Vagrant.configure(2) do |config|
       npm install -g grunt-cli gulp bower webpack
     # PHPBREW
       wget -P ~/.local/bin/ https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+    # PYENV
+      git clone https://github.com/yyuu/pyenv.git ~/.pyenv
     # COMPOSER
       wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
     # Oh My Zsh
