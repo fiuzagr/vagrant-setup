@@ -52,13 +52,13 @@ Plug 'easymotion/vim-easymotion'
 " EditorConfig
 Plug 'editorconfig/editorconfig-vim'
 
-" https://github.com/tpope/vim-sensible
-Plug 'tpope/vim-sensible'
-
-" https://github.com/terryma/vim-multiple-cursors
+" Multiple Cursors
 Plug 'terryma/vim-multiple-cursors'
 
 " VERIFICAR
+
+" https://github.com/tpope/vim-sensible
+Plug 'tpope/vim-sensible'
 
 " http://vimawesome.com/plugin/surround-vim
 " Plug 'tpope/vim-surround'
@@ -80,7 +80,7 @@ let mapleader = ","
 nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>m :NERDTreeFind<CR>
 " CTRLP
-nmap <leader>c :CtrlP<CR>
+nmap <leader>cp :CtrlP<CR>
 nmap <leader>cb :CtrlPBuffer<CR>
 nmap <leader>cm :CtrlPMRU<CR>
 nmap <leader>cx :CtrlPMixed<CR>

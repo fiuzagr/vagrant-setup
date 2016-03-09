@@ -108,7 +108,7 @@ Vagrant.configure(2) do |config|
       sudo chmod -R oga+rw /etc/apache2
       sudo ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
       sudo ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
-    # VERIFICAR ESSA MERDA
+    # VERIFICAR ESSA CORREÇÃO
       # sed -i 's/# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # Apache
       sudo a2enmod rewrite vhost_alias
@@ -141,8 +141,6 @@ Vagrant.configure(2) do |config|
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
     # CONFIGS MV
       mv ~/config/.* ~/ && rm -rf ~/config/
-    # Permissões
-      chmod +x -R ~/.local/bin
     # Zsh
       source ~/.zshrc
     # Vim Plug
@@ -151,6 +149,8 @@ Vagrant.configure(2) do |config|
     # Vim Colors
       sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
+    # Permissions
+    chmod -R +x ~/.local/bin/
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
