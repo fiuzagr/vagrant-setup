@@ -11,7 +11,12 @@ export PHPBREW_RC_ENABLE=1
 
 #PYENV
 export PYENV_ROOT="$HOME/.pyenv"
-eval "$(pyenv init -)"
+
+#RBENV
+export RBENV="$HOME/.rbenv/bin"
+
+#PLENV
+export PLENV="$HOME/.plenv/bin"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -30,6 +35,7 @@ BULLETTRAIN_TIME_SHOW="false"
 BULLETTRAIN_NVM_SHOW="true"
 BULLETTRAIN_CONTEXT_SHWO="true"
 BULLETTRAIN_GIT_SHOW="true"
+BULLETTRAIN_VIRTUALENV_SHOW="true"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -77,7 +83,7 @@ plugins=()
 
 # User configuration
 
-export PATH="$PYENV_ROOT:$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$PLENV:$RBENV:$PYENV_ROOT/bin:$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -107,6 +113,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# PYENV
+eval "$(pyenv init -)"
 
 # NVM
 export NVM_DIR=$HOME/.nvm

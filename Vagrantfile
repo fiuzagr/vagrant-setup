@@ -109,7 +109,7 @@ Vagrant.configure(2) do |config|
       sudo ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
     # SERVER NAME FIX APACHE
       echo '\nServerName 127.0.0.1' >> /etc/apache2/ports.conf
-    # Apache
+    # APACHE
       sudo a2enmod rewrite vhost_alias
       sudo mv /home/vagrant/apache/* /etc/apache2/sites-available/ && rm -rf /home/vagrant/apache
       sudo a2ensite clientes.dev.conf clientes.meteoro.conf clientes.nuts.conf
@@ -127,31 +127,39 @@ Vagrant.configure(2) do |config|
     # NVM
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
       . ~/.nvm/nvm.sh && nvm install 5 && nvm alias default v5
-      npm install -g grunt-cli gulp bower webpack ionic cordova reapp
+      #npm install -g grunt-cli gulp bower webpack ionic cordova reapp
     # PHPBREW
       wget -P ~/.local/bin/ https://github.com/phpbrew/phpbrew/raw/master/phpbrew
     # PYENV
       git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+    # RBENV
+      git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     # COMPOSER
       wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
     # PERMISSIONS
       chmod -R +x ~/.local/bin/
-    # LARAVEL
-      composer global require "laravel/installer"
     # Oh My Zsh
       sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     # Bullet Train Oh My Zsh
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
     # CONFIGS MV
-      mv ~/config/.* ~/ && rm -rf ~/config/
-    # Zsh
-      source ~/.zshrc
+      mv ~/config/.* ~/
+      rm -rf ~/config
+    # VIM PLUG
+      wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      vim +PlugInstall +qall
     # VIM PLUG
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       vim +PlugInstall +qall
     # VIM COLORS
       sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
+    # Zsh
+      source ~/.zshrc
+    # PHPBREW INIT
+      phpbrew init
+    # LARAVEL
+      composer global require "laravel/installer"
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
