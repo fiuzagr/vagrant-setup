@@ -109,8 +109,7 @@ Vagrant.configure(2) do |config|
         libicu-dev \
         libmhash-dev libmhash2 \
         libmcrypt-dev libmcrypt4
-
-    # VERIFICAR ESSA MERDA
+    # VERIFICAR ESSA CORREÇÃO
       # sed -i 's/# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # Apache
       sudo a2enmod rewrite vhost_alias
@@ -149,6 +148,8 @@ Vagrant.configure(2) do |config|
     # Vim Colors
       sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
+    # Permissions
+    chmod -R +x ~/.local/bin/
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
