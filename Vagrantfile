@@ -92,6 +92,7 @@ Vagrant.configure(2) do |config|
 
   $root = <<-SHELL
     # LAMP SERVER && DEV TOOLS
+      sudo apt-get update
       debconf-set-selections <<< 'mysql-server mysql-server/root_password password vagrant'
       debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password vagrant'
       sudo apt-get install -y \
@@ -100,15 +101,15 @@ Vagrant.configure(2) do |config|
         php5 php5-mysql php5-sqlite php5-gd php5-mcrypt libapache2-mod-php5 \
         git tmux zsh vim-nox ctags
     #PHPBREW
-      sudo apt-get build-dep php5
-      sudo apt-get install -y \
-        dev php-pear autoconf automake curl libcurl3-openssl-dev build-essential libxslt1-dev re2c libxml2 libxml2-dev php5-cli bison libbz2-dev libreadline-dev \
-        libfreetype6 libfreetype6-dev libpng12-0 libpng12-dev libjpeg-dev libjpeg8-dev libjpeg8  libgd-dev libgd3 libxpm4 libltdl7 libltdl-dev \
-        libssl-dev openssl \
-        gettext libgettextpo-dev libgettextpo0 \
-        libicu-dev \
-        libmhash-dev libmhash2 \
-        libmcrypt-dev libmcrypt4
+      # sudo apt-get build-dep php5
+      # sudo apt-get install -y \
+      #   dev php-pear autoconf automake curl libcurl3-openssl-dev build-essential libxslt1-dev re2c libxml2 libxml2-dev php5-cli bison libbz2-dev libreadline-dev \
+      #   libfreetype6 libfreetype6-dev libpng12-0 libpng12-dev libjpeg-dev libjpeg8-dev libjpeg8  libgd-dev libgd3 libxpm4 libltdl7 libltdl-dev \
+      #   libssl-dev openssl \
+      #   gettext libgettextpo-dev libgettextpo0 \
+      #   libicu-dev \
+      #   libmhash-dev libmhash2 \
+      #   libmcrypt-dev libmcrypt4
     # VERIFICAR ESSA CORREÇÃO
       # sed -i 's/# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
     # Apache
@@ -140,8 +141,6 @@ Vagrant.configure(2) do |config|
       wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
     # CONFIGS MV
       mv ~/config/.* ~/ && rm -rf ~/config/
-    # Permissões
-      chmod +x -R ~/.local/bin
     # Zsh
       source ~/.zshrc
     # Vim Plug
