@@ -81,7 +81,6 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
 
-
   config.vm.provision "file",
     source: "apache/",
     destination: "~/apache/"
@@ -108,8 +107,8 @@ Vagrant.configure(2) do |config|
       sudo chmod -R oga+rw /etc/apache2
       sudo ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
       sudo ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
-    # VERIFICAR ESSA CORREÇÃO
-      # sed -i 's/# /etc/apache2/sites-enabled/000-default.conf/ServerName 127.0.0.1/' /etc/apache2/ports.conf
+    # SERVER NAME FIX APACHE
+      echo '\nServerName 127.0.0.1' >> /etc/apache2/ports.conf
     # Apache
       sudo a2enmod rewrite vhost_alias
       sudo mv /home/vagrant/apache/* /etc/apache2/sites-available/ && rm -rf /home/vagrant/apache
@@ -128,13 +127,17 @@ Vagrant.configure(2) do |config|
     # NVM
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
       . ~/.nvm/nvm.sh && nvm install 5 && nvm alias default v5
-      npm install -g grunt-cli gulp bower webpack
+      npm install -g grunt-cli gulp bower webpack ionic cordova reapp
     # PHPBREW
       wget -P ~/.local/bin/ https://github.com/phpbrew/phpbrew/raw/master/phpbrew
     # PYENV
       git clone https://github.com/yyuu/pyenv.git ~/.pyenv
     # COMPOSER
       wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
+    # PERMISSIONS
+      chmod -R +x ~/.local/bin/
+    # LARAVEL
+      composer global require "laravel/installer"
     # Oh My Zsh
       sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     # Bullet Train Oh My Zsh
@@ -143,14 +146,12 @@ Vagrant.configure(2) do |config|
       mv ~/config/.* ~/ && rm -rf ~/config/
     # Zsh
       source ~/.zshrc
-    # Vim Plug
+    # VIM PLUG
       wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       vim +PlugInstall +qall
-    # Vim Colors
+    # VIM COLORS
       sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
       sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
-    # Permissions
-    chmod -R +x ~/.local/bin/
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
