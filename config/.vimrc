@@ -8,7 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " https://github.com/scrooloose/nerdtree
 Plug 'scrooloose/nerdtree'
-Plug 'crooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 Plug 'jistr/vim-nerdtree-tabs'
 
 " https://github.com/edkolev/tmuxline.vim
@@ -55,10 +55,25 @@ Plug 'editorconfig/editorconfig-vim'
 " Multiple Cursors
 Plug 'terryma/vim-multiple-cursors'
 
+" MiniMap
+Plug 'severin-lemaignan/vim-minimap'
+
+" https://github.com/Yggdroot/indentLine
+Plug 'Yggdroot/indentLine'
+
+" https://github.com/Yggdroot/indentLine
+Plug 'nathanaelkane/vim-indent-guides'
+
 " VERIFICAR
 
 " https://github.com/tpope/vim-sensible
 Plug 'tpope/vim-sensible'
+
+" https://github.com/tpope/vim-pathogen
+Plug 'Raimondi/delimitMate'
+
+" https://github.com/tpope/vim-pathogen
+Plug 'tpope/vim-pathogen'
 
 " http://vimawesome.com/plugin/surround-vim
 " Plug 'tpope/vim-surround'

@@ -39,7 +39,6 @@ BULLETTRAIN_VIRTUALENV_SHOW="true"
 BULLETTRAIN_RUBY_SHOW="true"
 BULLETTRAIN_GO_SHOW="true"
 BULLETTRAIN_PERL_SHOW="true"
-BULLETTRAIN_GIT_PROMPT_CMD=\${\$(git_prompt_info)//\\//\ \ }
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
