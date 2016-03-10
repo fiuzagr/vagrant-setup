@@ -18,6 +18,9 @@ export RBENV="$HOME/.rbenv/bin"
 #PLENV
 export PLENV="$HOME/.plenv/bin"
 
+#COMPOSER
+export COMPOSER="$HOME/.composer/vendor/bin"
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -35,10 +38,9 @@ BULLETTRAIN_TIME_SHOW="false"
 BULLETTRAIN_NVM_SHOW="true"
 BULLETTRAIN_CONTEXT_SHWO="true"
 BULLETTRAIN_GIT_SHOW="true"
-BULLETTRAIN_VIRTUALENV_SHOW="true"
-BULLETTRAIN_RUBY_SHOW="true"
-BULLETTRAIN_GO_SHOW="true"
-BULLETTRAIN_PERL_SHOW="true"
+BULLETTRAIN_VIRTUALENV_SHOW="false"
+BULLETTRAIN_RUBY_SHOW="false"
+BULLETTRAIN_PERL_SHOW="false"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -86,7 +88,7 @@ plugins=()
 
 # User configuration
 
-export PATH="$PLENV:$RBENV:$PYENV_ROOT:$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$COMPOSER:$PLENV:$RBENV:$PYENV_ROOT:$LOCAL_BIN:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 

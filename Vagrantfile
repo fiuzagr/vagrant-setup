@@ -113,10 +113,14 @@ Vagrant.configure(2) do |config|
       sudo a2enmod rewrite vhost_alias
       sudo mv /home/vagrant/apache/* /etc/apache2/sites-available/ && rm -rf /home/vagrant/apache
       sudo a2ensite clientes.dev.conf clientes.meteoro.conf clientes.nuts.conf
+    # APACHE PHP DEV
+      sed -i 's/^display_errors = Off/display_errors = On/' /etc/php5/apache2/php.ini
+      sed -i 's/^display_startup_errors = Off/display_startup_errors = On/' /etc/php5/apache2/php.ini
+      sed -i 's/^error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/error_reporting = E_ALL/' /etc/php5/apache2/php.ini
+    # APACHE RESTART
       sudo service apache2 restart
     # LANG SSH FIX
       sed -i 's/^AcceptEnv LANG LC_*/# AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
-    # SSH FIX
       echo 'LC_ALL="en_US.UTF-8"' > /etc/default/locale
     # CHANGE TO ZS
       sudo chsh -s /bin/zsh vagrant

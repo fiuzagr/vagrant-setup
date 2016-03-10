@@ -6,16 +6,19 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" https://github.com/edkolev/tmuxline.vim
+Plug 'edkolev/tmuxline.vim'
+
 " https://github.com/scrooloose/nerdtree
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'jistr/vim-nerdtree-tabs'
 
-" https://github.com/edkolev/tmuxline.vim
-Plug 'edkolev/tmuxline.vim'
-
 " https://github.com/ctrlpvim/ctrlp.vim
 Plug 'ctrlpvim/ctrlp.vim'
+
+" https://github.com/tpope/vim-sensible
+Plug 'tpope/vim-sensible'
 
 " THEMES AND COLORS
 
@@ -34,13 +37,13 @@ Plug 'wavded/vim-stylus'
 " Jade
 Plug 'digitaltoad/vim-pug'
 
-" Jade
+" Less
 Plug 'groenewege/vim-less'
 
 " Sass
 Plug 'tpope/vim-haml'
 
-" Lines
+" Numbers
 Plug 'myusuf3/numbers.vim'
 
 " Git Gutter
@@ -49,7 +52,7 @@ Plug 'airblade/vim-gitgutter'
 " Easy Motion
 Plug 'easymotion/vim-easymotion'
 
-" EditorConfig
+" Editor Config
 Plug 'editorconfig/editorconfig-vim'
 
 " Multiple Cursors
@@ -66,9 +69,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 
 " VERIFICAR
 
-" https://github.com/tpope/vim-sensible
-Plug 'tpope/vim-sensible'
-
 " https://github.com/tpope/vim-pathogen
 Plug 'Raimondi/delimitMate'
 
@@ -80,9 +80,6 @@ Plug 'Raimondi/delimitMate'
 
 " https://github.com/bling/vim-bufferline
 " Plug 'bling/vim-bufferline'
-
-" https://github.com/scrooloose/syntastic
-" Plug 'scrooloose/syntastic'
 
 " AutoComplete
 " Plug 'Valloric/YouCompleteMe'
