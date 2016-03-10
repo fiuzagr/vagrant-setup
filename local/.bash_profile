@@ -12,3 +12,6 @@ alias nuts='cd ~/Public/NUTS'
 alias meteoro='cd ~/Public/METEORO'
 alias dev='cd ~/Public/DEV'
 alias confs='cd ~/Public/CONFS'
+
+# ITERM2
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_she$

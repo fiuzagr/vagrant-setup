@@ -73,7 +73,7 @@ Plug 'tpope/vim-sensible'
 Plug 'Raimondi/delimitMate'
 
 " https://github.com/tpope/vim-pathogen
-Plug 'tpope/vim-pathogen'
+" Plug 'tpope/vim-pathogen'
 
 " http://vimawesome.com/plugin/surround-vim
 " Plug 'tpope/vim-surround'
