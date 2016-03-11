@@ -43,11 +43,16 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder '~/Public', "/home/vagrant/VBOX",
+  config.vm.synced_folder '~/Code', "/home/vagrant/VBOX/Code",
     create: true,
     group: "www-data",
     owner: "vagrant",
-    mount_options: ["dmode=775,fmode=664"]
+    mount_options: ["dmode=775,fmode=775"]
+  config.vm.synced_folder '~/Code/Nuts', "/home/vagrant/VBOX/Nuts",
+    create: true,
+    group: "www-data",
+    owner: "vagrant",
+    mount_options: ["dmode=775,fmode=775"]
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -81,13 +86,12 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
 
+
+  # Copy Apache Files
   config.vm.provision "file",
     source: "apache/",
     destination: "~/apache/"
 
-  config.vm.provision "file",
-    source: "config/",
-    destination: "~/config/"
 
   $root = <<-SHELL
     # LAMP SERVER && DEV TOOLS
@@ -97,7 +101,12 @@ Vagrant.configure(2) do |config|
       sudo apt-get install -y \
         apache2 \
         mysql-server \
-        git tmux zsh vim-nox ctags
+        git wget curl zsh vim-nox ctags htop
+    # Tmux
+      sudo apt-get install -y python-software-properties software-properties-common
+      sudo add-apt-repository -y ppa:pi-rho/dev
+      sudo apt-get update
+      sudo apt-get install tmux
     #PHPBREW (FAIL TO ALL)
       sudo apt-get build-dep -y php5
       sudo apt-get install -y \
@@ -112,7 +121,7 @@ Vagrant.configure(2) do |config|
     # APACHE
       sudo a2enmod rewrite vhost_alias
       sudo mv /home/vagrant/apache/* /etc/apache2/sites-available/ && rm -rf /home/vagrant/apache
-      sudo a2ensite clientes.dev.conf clientes.meteoro.conf clientes.nuts.conf
+      sudo a2ensite dev.conf clientes.nuts.conf
     # APACHE PHP DEV
       sed -i 's/^display_errors = Off/display_errors = On/' /etc/php5/apache2/php.ini
       sed -i 's/^display_startup_errors = Off/display_startup_errors = On/' /etc/php5/apache2/php.ini
@@ -122,51 +131,56 @@ Vagrant.configure(2) do |config|
     # LANG SSH FIX
       sed -i 's/^AcceptEnv LANG LC_*/# AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
       echo 'LC_ALL="en_US.UTF-8"' > /etc/default/locale
-    # CHANGE TO ZS
+    # CHANGE TO ZSH
       sudo chsh -s /bin/zsh vagrant
   SHELL
   config.vm.provision "shell", inline: $root, privileged: true
 
   $user = <<-SHELL
+    # Local Binaries
+      mkdir -p /home/vagrant/.local/bin 2> /dev/null # silent
+
+    # Composer
+      curl -sS https://getcomposer.org/installer | php -- --install-dir=/home/vagrant/.local/bin --filename=composer
+
+    # PHPBrew
+      curl -L  -o /home/vagrant/.local/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+
     # NVM
-      wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-      . ~/.nvm/nvm.sh && nvm install 5 && nvm alias default v5
-      #npm install -g grunt-cli gulp bower webpack ionic cordova reapp
-    # PHPBREW
-      wget -P ~/.local/bin/ https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
+
     # PYENV
-      git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+      #git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+
     # RBENV
-      git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+      #git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+
     # PLENV
-      git clone https://github.com/tokuhirom/plenv.git ~/.plenv
-    # COMPOSER
-      wget -qO- http://getcomposer.org/installer | php -- --install-dir=$HOME/.local/bin --filename=composer
+      #git clone https://github.com/tokuhirom/plenv.git ~/.plenv
+
     # PERMISSIONS
-      chmod -R +x ~/.local/bin/
-    # Oh My Zsh
-      sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-    # Bullet Train Oh My Zsh
-      wget -P ~/.oh-my-zsh/themes/ https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
-    # CONFIGS MV
-      mv ~/config/.* ~/
-      rm -rf ~/config
-    # VIM PLUG
-      wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      vim +PlugInstall +qall
-    # VIM PLUG
-      wget -P  ~/.vim/autoload/ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      vim +PlugInstall +qall
-    # VIM COLORS
-      sed -i 's/^" let g:airline_theme="solarized"/let g:airline_theme="solarized"/' ~/.vimrc
-      sed -i 's/^" colorscheme solarized/colorscheme solarized/' ~/.vimrc
-    # Zsh
-      source ~/.zshrc
-    # PHPBREW INIT
-      phpbrew init
-    # LARAVEL
-      composer global require "laravel/installer"
+      chmod -R +x /home/vagrant/.local/bin/
+
+    # My ENV
+      sh -c "$(wget https://raw.github.com/fiuzagr/env/master/tools/install.sh -O -)"
   SHELL
   config.vm.provision "shell", inline: $user, privileged: false
 
+
+  $dev = <<-SHELL
+    # NVM Install
+      . /home/vagrant/.nvm/nvm.sh
+      nvm install 5
+      nvm alias default v5
+
+    # NPM Install
+      npm install -g grunt-cli gulp bower webpack
+
+    # PHPBrew Init
+      /home/vagrant/.local/bin/phpbrew init
+
+    # Laravel Cli
+      /home/vagrant/.local/bin/composer global require "laravel/installer"
+  SHELL
+  config.vm.provision "shell", inline: $dev, privileged: false
 end
