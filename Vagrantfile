@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname = "ubuntu"
+  config.vm.hostname = "denver"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -37,7 +37,7 @@ Vagrant.configure(2) do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  # config.vm.network "public_network"
+   config.vm.network "public_network"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
     group: "www-data",
     owner: "vagrant",
     mount_options: ["dmode=775,fmode=775"]
-  config.vm.synced_folder '~/Code/Nuts', "/home/vagrant/VBOX/Nuts",
+  config.vm.synced_folder '~/Public/NUTS', "/home/vagrant/VBOX/Nuts",
     create: true,
     group: "www-data",
     owner: "vagrant",
@@ -63,10 +63,10 @@ Vagrant.configure(2) do |config|
     vb.gui = false
 
     # Customize the amount of memory on the VM:
-    vb.memory = "1024"
+    vb.memory = "2048"
 
     # Define name
-    vb.name = "UBUNTU"
+    vb.name = "Denver"
 
     # Symlinks
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate", "1"]
