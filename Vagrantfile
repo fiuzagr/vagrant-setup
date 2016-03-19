@@ -106,7 +106,7 @@ Vagrant.configure(2) do |config|
       sudo apt-get install -y python-software-properties software-properties-common
       sudo add-apt-repository -y ppa:pi-rho/dev
       sudo apt-get update
-      sudo apt-get install tmux
+      sudo apt-get install -y tmux
     #PHPBREW (FAIL TO ALL)
       sudo apt-get build-dep -y php5
       sudo apt-get install -y \
