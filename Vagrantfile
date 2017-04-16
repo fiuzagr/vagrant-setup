@@ -23,12 +23,13 @@ Vagrant.configure(2) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
-
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 3306, host: 3306
   config.vm.network "forwarded_port", guest: 3000, host: 3000
   config.vm.network "forwarded_port", guest: 3001, host: 3001
+  config.vm.network "forwarded_port", guest: 3002, host: 3002
+  config.vm.network "forwarded_port", guest: 4000, host: 4000
+  config.vm.network "forwarded_port", guest: 8000, host: 8000
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -43,12 +44,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder '~/Code', "/home/vagrant/VBOX/Code",
-    create: true,
-    group: "www-data",
-    owner: "vagrant",
-    mount_options: ["dmode=775,fmode=775"]
-  config.vm.synced_folder '~/Public/NUTS', "/home/vagrant/VBOX/Nuts",
+  config.vm.synced_folder '~/Workspace', "/home/vagrant/Box/Code",
     create: true,
     group: "www-data",
     owner: "vagrant",
@@ -59,17 +55,11 @@ Vagrant.configure(2) do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-    # Display the VirtualBox GUI when booting the machine
     vb.gui = false
-
-    # Customize the amount of memory on the VM:
-    vb.memory = "2048"
-
-    # Define name
+    vb.memory = "3072"
     vb.name = "Denver"
-
     # Symlinks
-    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate", "1"]
+    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
   #
   # View the documentation for the provider you are using for more
@@ -121,7 +111,7 @@ Vagrant.configure(2) do |config|
     # APACHE
       sudo a2enmod rewrite vhost_alias
       sudo mv /home/vagrant/apache/* /etc/apache2/sites-available/ && rm -rf /home/vagrant/apache
-      sudo a2ensite dev.conf clientes.nuts.conf
+      sudo a2ensite dev.conf
     # APACHE PHP DEV
       sed -i 's/^display_errors = Off/display_errors = On/' /etc/php5/apache2/php.ini
       sed -i 's/^display_startup_errors = Off/display_startup_errors = On/' /etc/php5/apache2/php.ini
@@ -147,13 +137,14 @@ Vagrant.configure(2) do |config|
       curl -L  -o /home/vagrant/.local/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew
 
     # NVM
-      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
 
     # PYENV
       #git clone https://github.com/yyuu/pyenv.git ~/.pyenv
 
     # RBENV
-      #git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+      git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+      git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 
     # PLENV
       #git clone https://github.com/tokuhirom/plenv.git ~/.plenv
@@ -170,8 +161,8 @@ Vagrant.configure(2) do |config|
   $dev = <<-SHELL
     # NVM Install
       . /home/vagrant/.nvm/nvm.sh
-      nvm install 5
-      nvm alias default v5
+      nvm install 6
+      nvm alias default 6
 
     # NPM Install
       npm install -g grunt-cli gulp bower webpack
